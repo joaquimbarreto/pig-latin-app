@@ -2,9 +2,9 @@ const express = require('express');
 const Translation = require('../models/translation');
 const auth = require('../middleware/auth');
 const router = new express.Router();
-// const cors = require("cors");
+const cors = require("cors");
 
-// router.use(cors());
+router.use(cors());
 
 router.post('/translations', auth, async (req, res) => {
   const translation = new Translation({ ...req.body, owner: req.user._id });

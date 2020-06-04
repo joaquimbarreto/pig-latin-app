@@ -1,0 +1,23 @@
+<form
+  [formGroup]="loginForm"
+  #heroForm="ngForm"
+  action=""
+  method="get"
+  class="form-example"
+>
+  <div class="form-example">
+    <label>
+      Email:
+      <input type="text" formControlName="email" />
+    </label>
+  </div>
+  <div class="form-example">
+    <label>
+      Password:
+      <input type="text" formControlName="password" />
+    </label>
+  </div>
+  <div class="form-example">
+    <button (click)="onSubmit()">Login</button>
+  </div>
+</form>

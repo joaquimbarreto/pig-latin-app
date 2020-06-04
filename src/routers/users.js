@@ -2,9 +2,9 @@ const express = require('express');
 const User = require('../models/user');
 const auth = require('../middleware/auth');
 const router = new express.Router();
-// const cors = require("cors");
+const cors = require('cors');
 
-// router.use(cors());
+router.use(cors());
 
 // create user
 router.post('/users', async (req, res) => {
