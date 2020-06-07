@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as appReducer from '../app.reducer';
-// import * as UserActions from '../users/store/user.actions';
 
 @Component({
   selector: 'app-header',
@@ -16,13 +16,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private store: Store<appReducer.AppState>) {}
 
   ngOnInit() {
-    this.userSubscription = this.store.select('user').subscribe((user: any) => {
-      if (localStorage.getItem('token') || user.user.length > 0) {
-        return (this.isLoggedIn = true);
-      }
-      console.log('isLoggedin: ', this.isLoggedIn);
-    });
-    console.log('isLoggedin: ', this.isLoggedIn);
+    this.userSubscription = this.store
+      .select('user')
+      .pipe(map((auth) => auth.user))
+      .subscribe((user: any) => {
+        if (localStorage.getItem('token') && user) {
+          this.isLoggedIn = true;
+          console.log('isLoggedin: ', this.isLoggedIn);
+        }
+        console.log('isLoggedin: ', this.isLoggedIn);
+      });
   }
 
   logout() {
@@ -31,7 +34,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.store.dispatch(new UserActions.LogoutUser());
     this.userSubscription.unsubscribe();
   }
 }

@@ -24,6 +24,22 @@ export function userReducer(
         ...state,
         user: null,
       };
+    case UserActions.LOGIN:
+      const user = new User(
+        action.payload.name,
+        action.payload.email,
+        action.payload.token,
+        action.payload.isLoggedIn
+      );
+      return {
+        ...state,
+        user,
+      };
+    case UserActions.LOGOUT:
+      return {
+        ...state,
+        user: null,
+      };
     default:
       return state;
   }

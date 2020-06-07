@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
           res.token,
           isLoggedIn
         );
-        this.store.dispatch(new UserActions.LoginUser(newUser));
+        this.store.dispatch(new UserActions.Login(newUser));
       },
       (error) => {
         console.log(error);
