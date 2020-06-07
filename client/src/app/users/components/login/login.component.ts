@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -19,8 +19,27 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm.value);
+
     this.http
       .post('http://localhost:3000/users/login', this.loginForm.value)
+      // .pipe(res=> token = res.token)
+      .subscribe((res: any) => {
+        localStorage.removeItem('token');
+        localStorage.setItem('token', res.token);
+      });
+  }
+
+  logout() {
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: bearer,
+      }),
+    };
+
+    this.http
+      .post('http://localhost:3000/users/logout', null, httpOptions)
       .subscribe((res) => console.log(res));
   }
 }

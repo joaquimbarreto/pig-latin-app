@@ -6,16 +6,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { UsersModule } from './users/users.module';
+import { TranslationsModule } from './translations/translations.module';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    UsersModule,
+    TranslationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -14,10 +14,14 @@
   <div class="form-example">
     <label>
       Password:
-      <input type="text" formControlName="password" />
+      <input type="password" formControlName="password" />
     </label>
   </div>
   <div class="form-example">
     <button (click)="onSubmit()">Login</button>
+  </div>
+
+  <div class="form-example">
+    <button (click)="logout()">Logout</button>
   </div>
 </form>
