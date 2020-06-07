@@ -6,14 +6,7 @@ export interface State {
 }
 
 const initalState: State = {
-  user: [
-    {
-      name: '',
-      email: '',
-      token: '',
-      isLoggedIn: null,
-    },
-  ],
+  user: [],
 };
 
 export function userReducer(
@@ -25,6 +18,11 @@ export function userReducer(
       return {
         ...state,
         user: [...state.user, action.payload],
+      };
+    case UserActions.LOGOUT_USER:
+      return {
+        ...state,
+        user: null,
       };
     default:
       return state;

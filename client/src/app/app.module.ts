@@ -11,7 +11,9 @@ import { TranslationsModule } from './translations/translations.module';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { userReducer } from './users/store/user.reducer';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +21,10 @@ import { userReducer } from './users/store/user.reducer';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({ user: userReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

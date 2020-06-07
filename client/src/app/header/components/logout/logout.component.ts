@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Store } from '@ngrx/store';
+
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import * as UserActions from '../../../users/store/user.actions';
+import * as appReducer from '../../../app.reducer';
 
 @Component({
   selector: 'app-logout',
@@ -7,7 +11,13 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
   styleUrls: ['./logout.component.css'],
 })
 export class LogoutComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  @Input() isLoggedIn: boolean;
+  @Output() loggedOut = new EventEmitter<void>();
+
+  constructor(
+    private http: HttpClient,
+    private store: Store<appReducer.AppState>
+  ) {}
 
   ngOnInit() {}
 
@@ -22,6 +32,12 @@ export class LogoutComponent implements OnInit {
 
     this.http
       .post('http://localhost:3000/users/logout', null, httpOptions)
-      .subscribe((res) => console.log(res));
+      .subscribe((res) => {
+        console.log(res);
+        localStorage.removeItem('token');
+      });
+    this.store.dispatch(new UserActions.LogoutUser());
+
+    this.loggedOut.emit();
   }
 }
