@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { User } from '../../models/user.model';
+import * as UserActions from '../../store/user.actions';
 
 @Component({
   selector: 'app-login',
@@ -13,33 +16,32 @@ export class LoginComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store<{ user: { user: User[] } }>
+  ) {}
 
   ngOnInit() {}
 
   onSubmit() {
-    console.log(this.loginForm.value);
-
-    this.http
-      .post('http://localhost:3000/users/login', this.loginForm.value)
-      // .pipe(res=> token = res.token)
-      .subscribe((res: any) => {
+    const loginValues = this.loginForm.value;
+    this.http.post('http://localhost:3000/users/login', loginValues).subscribe(
+      (res: any) => {
         localStorage.removeItem('token');
         localStorage.setItem('token', res.token);
-      });
-  }
-
-  logout() {
-    const bearer = 'Bearer ' + localStorage.getItem('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: bearer,
-      }),
-    };
-
-    this.http
-      .post('http://localhost:3000/users/logout', null, httpOptions)
-      .subscribe((res) => console.log(res));
+        console.log('user: ', res.user);
+        const isLoggedIn = true;
+        const newUser = new User(
+          res.user.name,
+          res.user.email,
+          res.token,
+          isLoggedIn
+        );
+        this.store.dispatch(new UserActions.LoginUser(newUser));
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
