@@ -12,12 +12,12 @@ import * as appReducer from '../app.reducer';
 export class UsersComponent implements OnInit {
   @Input() alertError: boolean;
 
-  user: Observable<{ user: User[] }>;
+  // user: Observable<{ user: User[] }>;
 
   constructor(private store: Store<appReducer.AppState>) {}
 
   ngOnInit() {
-    this.user = this.store.select('user');
+    // this.user = this.store.select('user');
   }
 
   onhHandleAlertError() {

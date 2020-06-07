@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((user: any) => {
         if (localStorage.getItem('token') && user) {
           this.isLoggedIn = true;
-          console.log('isLoggedin: ', this.isLoggedIn);
+          return console.log('isLoggedin: ', this.isLoggedIn);
         }
         console.log('isLoggedin: ', this.isLoggedIn);
       });

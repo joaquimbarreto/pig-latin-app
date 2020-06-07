@@ -30,12 +30,9 @@ export class LogoutComponent implements OnInit {
       }),
     };
 
-    this.http
-      .post('http://localhost:3000/users/logout', null, httpOptions)
-      .subscribe((res) => {
-        console.log(res);
-        localStorage.removeItem('token');
-      });
+    this.http.post('http://localhost:3000/users/logout', null, httpOptions);
+
+    localStorage.removeItem('token');
     this.store.dispatch(new UserActions.LogoutUser());
 
     this.loggedOut.emit();
