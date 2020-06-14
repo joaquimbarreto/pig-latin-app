@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import * as UserActions from '../../../users/store/user.actions';
 import * as appReducer from '../../../app.reducer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -16,7 +17,8 @@ export class LogoutComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private store: Store<appReducer.AppState>
+    private store: Store<appReducer.AppState>,
+    private router: Router
   ) {}
 
   ngOnInit() {}
@@ -36,5 +38,6 @@ export class LogoutComponent implements OnInit {
     this.store.dispatch(new UserActions.LogoutUser());
 
     this.loggedOut.emit();
+    this.router.navigate(['/']);
   }
 }

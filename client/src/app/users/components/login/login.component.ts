@@ -4,6 +4,7 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { User } from '../../models/user.model';
 import * as UserActions from '../../store/user.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,15 +19,24 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private store: Store<{ user: { user: User[] } }>
+    private store: Store<{ user: { user: User[] } }>,
+    private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.router.navigate(['/translations']);
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
 
   onSubmit() {
     const loginValues = this.loginForm.value;
     this.http.post('http://localhost:3000/users/login', loginValues).subscribe(
       (res: any) => {
+        console.log('res', res);
         localStorage.removeItem('token');
         localStorage.setItem('token', res.token);
         console.log('user: ', res.user);
@@ -38,6 +48,7 @@ export class LoginComponent implements OnInit {
           isLoggedIn
         );
         this.store.dispatch(new UserActions.Login(newUser));
+        this.router.navigate(['/translations']);
       },
       (error) => {
         console.log(error);
