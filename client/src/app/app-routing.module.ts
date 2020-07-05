@@ -4,7 +4,7 @@ import { TranslationsComponent } from './translations/translations.component';
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
-  { path: 'translations', component: TranslationsComponent },
+  { path: '', component: TranslationsComponent },
   { path: 'users', component: UsersComponent },
 ];
 

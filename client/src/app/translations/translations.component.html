@@ -1,3 +1,9 @@
-<p>
-  translations works!
+<p *ngIf="!user">
+  Welcome to Pig Latin, Login above to start translations or Sign Up
 </p>
+
+<div *ngIf="user">
+  <p>Translate to Pig Latin</p>
+
+  <app-user-input></app-user-input>
+</div>

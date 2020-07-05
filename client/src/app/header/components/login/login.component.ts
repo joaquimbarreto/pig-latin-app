@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  @Input() isLoggedIn: boolean;
+  @Output() loggedIn = new EventEmitter<void>();
+
   loginForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
@@ -23,23 +26,15 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.router.navigate(['/translations']);
-    } else {
-      this.router.navigate(['/']);
-    }
-  }
+  ngOnInit() {}
 
   onSubmit() {
     const loginValues = this.loginForm.value;
     this.http.post('http://localhost:3000/users/login', loginValues).subscribe(
       (res: any) => {
-        console.log('res', res);
+        console.log('User logging in: ', res);
         localStorage.removeItem('token');
         localStorage.setItem('token', res.token);
-        console.log('user: ', res.user);
         const isLoggedIn = true;
         const newUser = new User(
           res.user.name,
@@ -48,7 +43,8 @@ export class LoginComponent implements OnInit {
           isLoggedIn
         );
         this.store.dispatch(new UserActions.Login(newUser));
-        this.router.navigate(['/translations']);
+        this.loggedIn.emit();
+        this.router.navigate(['/']);
       },
       (error) => {
         console.log(error);

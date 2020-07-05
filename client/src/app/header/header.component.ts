@@ -22,15 +22,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((user: any) => {
         if (localStorage.getItem('token') && user) {
           this.isLoggedIn = true;
-          return console.log('isLoggedin: ', this.isLoggedIn);
+          return console.log('token && user: ', this.isLoggedIn);
         }
-        console.log('isLoggedin: ', this.isLoggedIn);
       });
   }
 
   logout() {
     this.isLoggedIn = false;
-    console.log('isLoggedin: ', this.isLoggedIn);
+    console.log('Logout button clicked: ', !this.isLoggedIn);
+  }
+
+  login() {
+    this.isLoggedIn = true;
+    console.log('Login button clicked: ', this.isLoggedIn);
   }
 
   ngOnDestroy() {

@@ -1,17 +1,19 @@
-<form [formGroup]="loginForm" action="" method="get" class="form-example">
-  <div class="form-example">
-    <label>
-      Email:
-      <input type="text" formControlName="email" />
-    </label>
-  </div>
-  <div class="form-example">
-    <label>
-      Password:
-      <input type="password" formControlName="password" />
-    </label>
-  </div>
-  <div class="form-example">
-    <button (click)="onSubmit()">Login</button>
-  </div>
-</form>
+<div *ngIf="!isLoggedIn">
+  <form [formGroup]="loginForm" action="" method="get" class="form-example">
+    <div class="form-example">
+      <label>
+        Email:
+        <input type="text" formControlName="email" />
+      </label>
+    </div>
+    <div class="form-example">
+      <label>
+        Password:
+        <input type="password" formControlName="password" />
+      </label>
+    </div>
+    <div class="form-example">
+      <button (click)="onSubmit()">Login</button>
+    </div>
+  </form>
+</div>

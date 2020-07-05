@@ -35,7 +35,7 @@ export class LogoutComponent implements OnInit {
     this.http.post('http://localhost:3000/users/logout', null, httpOptions);
 
     localStorage.removeItem('token');
-    this.store.dispatch(new UserActions.LogoutUser());
+    this.store.dispatch(new UserActions.Logout());
 
     this.loggedOut.emit();
     this.router.navigate(['/']);
