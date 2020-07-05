@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { User } from '../../models/user.model';
-import * as UserActions from '../../store/user.actions';
+import { User } from '../../../users/models/user.model';
+import * as UserActions from '../../../users/store/user.actions';
 import { Router } from '@angular/router';
 
 @Component({
